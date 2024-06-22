@@ -1,0 +1,40 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Searchify</title>
+    <link rel="stylesheet" href="{% static 'output.css' %}">
+</head>
+<body>
+    <nav class="p-5 bg-slate-700">
+        <div class="text-yellow-400 font-semibold text-3xl">SEARCHIFY</div>
+    </nav>
+    <div class="p-10 h-[87vh] bg-slate-200 flex flex-col items-center">
+        <form action="{% url 'home' %}" method="post" class="flex">
+            {% csrf_token %}
+            <input type="text" name="input" id="search" placeholder="search your food" class="p-3 rounded-tl-md rounded-bl-md outline-none" 
+            {% if formdata %}
+                value={{formdata}}
+            {% endif %}
+                >
+            <input type="submit" value="search" class="bg-slate-700 text-white rounded-br-md rounded-tr-md p-2">
+        </form>
+
+        <div class="bg-white mt-5 w-[50%] max-h-[60vh] overflow-auto rounded-md flex flex-col" >
+            
+            {% for item in items  %}
+                <div class="my-1 mx-2 bg-slate-500 rounded-md text-white p-1 font-mono">
+                        <div >Item : {{item.name}}</div>
+                        <div>Price : {{item.price}}</div>
+                        <div >Hotel : {{item.hotel.name}}</div>
+                        <div>Location : {{item.hotel.location}}</div>
+
+                </div>
+            {% endfor %}
+                
+        </div>
+    </div>
+</body>
+</html>
